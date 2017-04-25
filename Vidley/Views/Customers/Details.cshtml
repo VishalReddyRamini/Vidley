@@ -1,0 +1,13 @@
+﻿@model Vidley.Models.Customer
+    @{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@Model.Name</h4>
+
+<p>Membership Type:@Model.MembershipType.Name</p>
+@if (Model.BirthDate!=null)
+{
+<p>Birthdate:@Model.BirthDate.ToString()</p>
+}

@@ -1,0 +1,45 @@
+﻿@model  IEnumerable<Vidley.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+@if (!Model.Any())
+{
+   <p>We do not have any customers.</p>
+}
+else
+{
+    <table 	class="table table-bordered table-striped">
+        <thead>
+            <tr><th>
+                Customer Name
+                </th>
+            <th>
+                Membership Type
+            </th>
+            <th>
+                Delete Memeber
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(customer.Name,"Edit","Customers",new { id = customer.Id },null)</td>
+                <td>
+                    @customer.MembershipType.Name
+                </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", "Customers", new { id = customer.Id }, null)
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+}
+
+<p>@Html.ActionLink("Add New Customer","New","Customers", new { @class = "btn btn-default" })</p>

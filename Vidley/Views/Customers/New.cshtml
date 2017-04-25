@@ -1,0 +1,31 @@
+﻿@model Vidley.ViewModels.NewViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+<hr />
+@using (@Html.BeginForm())
+{
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(m=>m.customer.Name)
+            @Html.TextBoxFor(m => m.customer.Name, new {@class="form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.customer.BirthDate)
+            @Html.TextBoxFor(m => m.customer.BirthDate,"{0:d MMM yyyy}", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.CheckBoxFor(m=>m.customer.IsSubscribed)<span>Subscribed to News Letter</span>
+            
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.customer.MembershipTypeId)
+            @Html.DropDownListFor(m=>m.customer.MembershipTypeId, new SelectList(Model.membershipTypes,"Id","Name"),"Select MembershipType",new { @class = "form-control" })
+        </div>
+        @Html.HiddenFor(m=>m.customer.Id)
+        <button class="navbar-btn btn-success btn-md" type="submit">Save</button>
+    </div>
+}

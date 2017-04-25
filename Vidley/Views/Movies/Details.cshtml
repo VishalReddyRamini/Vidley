@@ -1,0 +1,14 @@
+﻿@model Vidley.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movie Details</h2>
+<ul>
+    <li>Name: @Model.Name</li>
+    <li>Date Added: @Model.DateAdded</li>
+    <li>Date Realesed: @Model.RealeaseDate</li>
+    <li>Number In Stock: @Model.NumberInStock</li>
+</ul>

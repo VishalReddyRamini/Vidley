@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Vidley.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Movie name</th>
+            <th>Genre</th>
+            <th>Delete Movie</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var movie in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(movie.Name,"Edit","Movies",new {id=movie.Id },null)</td>
+                <td>@movie.Genre.Name</td>
+                <td>@Html.ActionLink("Delete","Delete","Movies",new {id=movie.Id },null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>@Html.ActionLink("Add New Movie","New","Movies",new {@class="btn btn-default" })</p>

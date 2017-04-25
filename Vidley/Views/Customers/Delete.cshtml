@@ -1,0 +1,15 @@
+﻿@model Vidley.ViewModels.NewViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<ul>
+    <li>Name: @Model.customer.Name</li>
+    <li>MemebershipType: @Model.customer.MembershipType.Name</li>
+    <li>BirthDate: @Model.customer.BirthDate</li>
+</ul>
+@Html.ActionLink("Delete","remove","Customers",new { id=Model.customer.Id}, new {@class="btn btn-danger"})
+@Html.ActionLink("Go Back to list", "Index", "Customers", new { @class = "btn btn-default" })
