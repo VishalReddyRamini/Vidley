@@ -6,16 +6,19 @@
 
 <h2>New Customer</h2>
 <hr />
-@using (@Html.BeginForm())
+@using (@Html.BeginForm("Edit","Customers","HttpPost"))
 {
+    @Html.ValidationSummary(true,"Please fix the following errors")
     <div>
         <div class="form-group">
             @Html.LabelFor(m=>m.customer.Name)
             @Html.TextBoxFor(m => m.customer.Name, new {@class="form-control"})
+            @Html.ValidationMessageFor(m=>m.customer.Name)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.customer.BirthDate)
             @Html.TextBoxFor(m => m.customer.BirthDate,"{0:d MMM yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m=>m.customer.BirthDate)
         </div>
         <div class="form-group">
             @Html.CheckBoxFor(m=>m.customer.IsSubscribed)<span>Subscribed to News Letter</span>
@@ -24,8 +27,14 @@
         <div class="form-group">
             @Html.LabelFor(m => m.customer.MembershipTypeId)
             @Html.DropDownListFor(m=>m.customer.MembershipTypeId, new SelectList(Model.membershipTypes,"Id","Name"),"Select MembershipType",new { @class = "form-control" })
+            @Html.ValidationMessageFor(m=>m.customer.MembershipTypeId)
         </div>
         @Html.HiddenFor(m=>m.customer.Id)
+        @Html.AntiForgeryToken()
         <button class="navbar-btn btn-success btn-md" type="submit">Save</button>
     </div>
 }
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    }

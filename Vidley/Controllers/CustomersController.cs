@@ -29,8 +29,18 @@ namespace Vidley.Controllers
             return View(customer);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new NewViewModel
+                {
+                    customer = customer,
+                    membershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("New", viewModel);
+            }
             if (customer.Id == 0)
             {
                 _context.Customers.Add(customer);
@@ -52,6 +62,7 @@ namespace Vidley.Controllers
             var membershipType = _context.MembershipTypes.ToList();
             var viewModel = new NewViewModel
             {
+                customer= new Customer(),
                 membershipTypes = membershipType
             };
             return View(viewModel);

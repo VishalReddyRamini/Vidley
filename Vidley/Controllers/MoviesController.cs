@@ -36,6 +36,7 @@ namespace Vidley.Controllers
             var genre = _dbcontext.Genre.ToList();
             var viewModel = new MovieViewModel
             {
+                Movie= new Movie(),
                 genre = genre
             };
             return View(viewModel);  

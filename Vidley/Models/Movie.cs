@@ -13,6 +13,7 @@ namespace Vidley.Models
         public string Name { get; set; }
         [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
+        [DisplayName("Genre")]
         public int GenreId { get; set; }
         [DisplayName("Released Date")]
         public DateTime? RealeaseDate { get; set; }
