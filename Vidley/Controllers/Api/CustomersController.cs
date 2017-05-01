@@ -1,9 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Vidley.DTOs;
 using Vidley.Models;
 
 namespace Vidley.Controllers.Api
@@ -16,42 +18,42 @@ namespace Vidley.Controllers.Api
             _dbcontext = new ApplicationDbContext();
         }
         //Get:/api/Customers to get all the customers
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerDTO> GetCustomers()
         {
-            return _dbcontext.Customers.ToList();
+            return _dbcontext.Customers.ToList().Select(Mapper.Map<Customer,CustomerDTO>);
         }
 
         //Get: /api/Customers/id to get customer with particular ID
-        public Customer GetCustomers(int id)
+        public CustomerDTO GetCustomers(int id)
         {
             var customer = _dbcontext.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
-            return customer;
+            return Mapper.Map<Customer,CustomerDTO>(customer);
         }
         //Post: /api/Customers/ to save the details of a customer
         [HttpPost]
-        public Customer CreateCustomer(Customer customer)
+        public CustomerDTO CreateCustomer(CustomerDTO customerdto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            _dbcontext.Customers.Add(customer);
+            var custDto = Mapper.Map<CustomerDTO, Customer>(customerdto);
+
+            _dbcontext.Customers.Add(custDto);
             _dbcontext.SaveChanges();
-            return customer;
+            customerdto.Id = custDto.Id;
+            return customerdto;
         }
         [HttpPut]
-        public void SaveCustomer(Customer customer, int id)
+        public void SaveCustomer(CustomerDTO customer, int id)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             var customerInDb = _dbcontext.Customers.SingleOrDefault(c => c.Id == id);
             if (customerInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
-            customerInDb.Name = customer.Name;
-            customerInDb.BirthDate = customer.BirthDate;
-            customerInDb.IsSubscribed = customer.IsSubscribed;
-            customerInDb.MembershipTypeId = customer.MembershipTypeId;
-
+            Mapper.Map(customer, customerInDb);
+            
             _dbcontext.SaveChanges();
         }
         [HttpDelete]
